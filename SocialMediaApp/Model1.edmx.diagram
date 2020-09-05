@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0142e0b93bbb40658946f2d292ab988f" Name="Diagram1">
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.COMMENTS" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.FOLLOWINGS" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.LIKEDPOSTS" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.POSTS" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.REPLIES" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.USERS" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SOCIALMEDIA_DBModel2.database_firewall_rules" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__COMMENTS__POSTID__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__COMMENTS__USERID__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__REPLIES__COMMENT__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__FOLLOWING__FOLLO__693CA210" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__FOLLOWING__USERI__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__LIKEDPOST__POSTI__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__LIKEDPOST__USERI__6A30C649" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__POSTS__USERID__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="SOCIALMEDIA_DBModel2.FK__REPLIES__USERID__6E01572D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

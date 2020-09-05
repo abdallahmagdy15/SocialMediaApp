@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -214,10 +216,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\messengerDB.mdf" />
-    <Content Include="App_Data\messengerDB_log.ldf">
-      <DependentUpon>messengerDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\loginMessStyle.css" />
     <Content Include="Content\oldstyle.css" />
     <Content Include="Data\3_rounded_square.png" />

@@ -9,7 +9,7 @@ namespace SocialMediaApp.Models
 {
     public class dbUtils
     {
-        public string connString = @"Server=tcp:ql7fq5xxow.database.windows.net,1433;Initial Catalog=MESSENGER_DB;Persist Security Info=False;User ID=db_abdallah_elkhayat;Password='2232122321Aa';MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+        public string connString = @"Data Source=abdallahm.database.windows.net;Initial Catalog=MESSENGER_DB;Persist Security Info=True;User ID=abdallahm15;Password=Elkhayyat15";
         public ArrayList[] fetch(string sql, int NofCols)
         {
             ArrayList[] data = new ArrayList[NofCols];
