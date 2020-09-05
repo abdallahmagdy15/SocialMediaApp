@@ -1,0 +1,28 @@
+﻿@model SocialMediaApp.Models.chatModel
+<div class="msgBoxShadow"></div>
+<ul type="none" class="chatMessages" conid=@Model.conID>
+    @{
+        int x = 0;
+        if (Model.starter == 1)
+        {
+            foreach (string o in Model.userOneMess)
+            {
+                <li>
+                    <label>@Model.date[x].ToString()</label>
+                    <p class="msg1 msg">@Model.userTwoMess[x].ToString()</p>
+                    <p class="msg2 msg">@o</p>
+                </li>
+                x++;
+            }
+        }
+        else
+        {
+            foreach (string o in Model.userOneMess)
+            {
+                <li><p class="msg1">@o</p><p class="msg2">@Model.userTwoMess[x].ToString()</p></li>
+                <label>@Model.date[x].ToString()</label>
+                x++;
+            }
+        }
+    }
+</ul>

@@ -1,0 +1,62 @@
+﻿@model SocialMediaApp.Models.LoginModel
+
+@{
+    ViewBag.Title = "login";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+<link href="~/Content/loginMessStyle.css" rel="stylesheet" />
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "loginForm" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="row">
+        <div class="form-horizontal formInner col-md-6">
+            <div><img src="~/Data/messengerLogo.png" /></div>
+            <h2>Be together, whenever.</h2>
+            <h5>A simple way to text, video chat and plan things all in one place.</h5>
+            @Html.ValidationSummary(true)
+            @if(Model.status == "failed"){
+                <label style="color:red">Failed To Login ! Try Again.</label>
+            }
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.username, new { @class = "form-control", @placeholder = "Username" })
+                    <!----Html.ValidationMessageFor(m => m.username)-->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                    <!----Html.ValidationMessageFor(model => model.password)-->
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Sign In" class="loginSubmit btn btn-primary" />
+                </div>
+            </div>
+            @Html.ActionLink("Create New Account?", "../Register/Register", new { @class = "createNewAcc" })
+
+
+            <div class="getMobileApp">
+                <a class="getOnAppStore" href="https://apps.apple.com/app/id454638411">
+                    <div><img src="~/Data/getonappstore.png" /></div>
+                </a>
+                <a class="getOnPlayStore" href="https://play.google.com/store/apps/details?id=com.facebook.orca">
+                    <div><img src="~/Data/getonplaystore.png" /></div>
+                </a>
+            </div>
+        </div>
+        <div class="loginCover col-md-6">
+            <img src="~/Data/cover.jpg" />
+        </div>
+    </div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

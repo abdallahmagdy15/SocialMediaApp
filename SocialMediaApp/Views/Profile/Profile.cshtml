@@ -1,0 +1,364 @@
+﻿@model SocialMediaApp.Models.ProfileModel
+@{
+    ViewBag.Title = "Profile";
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="~/Content/profileStyle.css" rel="stylesheet" />
+<link href="~/Content/style.css" rel="stylesheet" />
+<div class="container">
+    <header>
+          @{
+              Html.RenderPartial("header",Model.headerm);   
+        }
+        
+    </header>
+    <section>
+         <div class="profileHeader">
+            @{if(Model.user.BG==null){ Model.user.BG="~/Data/BG/defBG.jpg";}}
+            <div class="profileBG row" style="background-image: url('@Url.Content(@Model.user.BG)')">
+                @if (Model.owner.USERID == Model.user.USERID)
+                    {
+                        using (Html.BeginForm("uploadBG", "Profile", new { ownerid = Model.owner.USERID }, FormMethod.Post, new { Class="uploadBGForm", enctype = "multipart/form-data" }))
+                        {
+                            <label for="uploadBG" class="uploadBG">
+                                <span><img src="~/Data/camera_.png"/></span>
+                                <span><label>Update Cover Photo</label></span>
+                            </label>
+                    
+                        <input id="uploadBG" type="file" name="bg" style="display:none"/>
+                        <input type="submit" class="submitUploadBG" value="Upload" style="display:none"/>
+                        }
+                    }
+                <div class="profile_dp">
+                    @{if (Model.user.DISPLAYPICTURE == null) { Model.user.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                    <img src='@Url.Content(@Model.user.DISPLAYPICTURE)' />
+                    @if (Model.owner.USERID == Model.user.USERID)
+                    {
+                        using (Html.BeginForm("uploadDP", "Profile", new { ownerid = Model.owner.USERID }, FormMethod.Post, new {Class="uploadDPForm", enctype = "multipart/form-data" }))
+                        {
+                            <label for="uploadDP" class="uploadDP">
+                                <span>
+                                    <img src="~/Data/camera_.png"/>
+                                </span>
+                            </label>
+                        <input id="uploadDP" type="file" name="dp" style="display:none" />
+                        <input type="submit" class="submitUploadDP"  value="Upload" style="display:none"/>
+                        }
+                    }
+                        
+                </div>
+                <div class="username col-md-6 rmPadding">
+                    <label>@Model.user.USERNAME</label>
+                </div>
+                <div class="profileStatus FRstatus col-md-6 rmPadding">
+                    @{
+                        switch (Model.profileStatus)
+                        {
+                            case "friend":
+                                <span><img src="~/Data/cancel.png" /></span>
+                                @Html.ActionLink("Unfriend", "unfriend", new { userid = Model.user.USERID, ownerid = Model.owner.USERID, action_ = "Profile", controller_ = "Profile" })
+                                ; break;
+                            case "waitConfirm":
+                            <span><img src="~/Data/checked.png" /></span>
+                                @Html.ActionLink("Confirm Friend", "confirmFR", new { userid = Model.user.USERID, ownerid = Model.owner.USERID, action_ = "Profile", controller_ = "Profile" })
+                                ; break;
+                            case "FRsent":
+                            <span><img src="~/Data/cancel.png" /></span>
+                                @Html.ActionLink("Cancel Request", "cancelFR", new { userid = Model.user.USERID, ownerid = Model.owner.USERID, action_ = "Profile", controller_ = "Profile" })
+                                ; break;
+                            case "notFriend":
+                            <span><img src="~/Data/add.png" /></span>
+                                @Html.ActionLink("Add Friend", "sendFR", new { userid = Model.user.USERID, ownerid = Model.owner.USERID, action_ = "Profile", controller_ = "Profile" })
+                                ; break;
+                            default:
+                           <span>none</span>
+                                break;
+                        }
+                    }
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <!-- profile info-->
+            <div class="col-md-3 profileInfo rmPadding">
+                <label>User Information</label>
+                <div class=" bio">
+                    <p>
+                        @{if (Model.user.BIO == null) { Model.user.BIO = ""; }}
+                        @Model.user.BIO
+                    </p>
+                </div>
+                <div class="email">
+                    <span><img src="~/Data/email.png" /></span>
+                    @Html.DisplayFor(m => Model.user.EMAIL)
+                </div>
+                <div class="dob">
+                    <span><img src="~/Data/calendar.png" /></span>
+                    @Model.user.DOB.ToShortDateString()
+                </div>
+                <div class="gender">
+                    <span><img src="~/Data/gender.png" /></span>
+                    @{
+                        string gender = "Male";
+                        if (Model.user.GENDER == false) { gender = "Female"; }
+                    }
+                    @gender
+                </div>
+            </div>
+            <!-- profile posts-->
+            <div class="col-md-6 postsContainer rmPadding">
+                @if (Model.user.USERID == Model.owner.USERID)
+                {
+                    <div class="createPostFocusBG">
+                <!-- create post -->
+                <div class="createPost">
+                    <div class="createPostTitle">
+                        <label>Create Post</label>
+                    </div>
+                    
+                    @using (Html.BeginForm("createPost", "Home", new { action_ = "Profile", controller_ = "Profile" , userid= Model.user.USERID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="userDP">
+                            @{if (Model.owner.DISPLAYPICTURE == null) { Model.owner.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                            <img src='@Url.Content(@Model.owner.DISPLAYPICTURE)' />
+                        </div>
+                        <textarea name="postContent" placeholder="What's in your mind, @Model.owner.USERNAME ?"></textarea>
+                        <hr />
+                        <input type="hidden" id="userid_postForm" name="ownerid" value=@Model.owner.USERID />
+                        <label for="uploadPostMedia" class="uploadPostMedia btn" ><span><img src="~/Data/attach.png" /></span> Attach file/media</label>
+                        <input id="uploadPostMedia"  type="file" name="attach" style="display:none"/>
+                        <p id="chosedFile"></p>
+                        <input type="submit" class="submitPost" value="Post" />
+                    }
+                </div>
+                </div>    
+                }
+                
+                @foreach (POST post in Model.posts)
+                {
+                    <div class="postWrapper" id="post_@post.POSTID" style="background-color:#fff;">
+                        <div class="post">
+                            <div class="postOwner">
+                                <div class="postOwnerDP userDP">
+                                    @{if (post.USER.DISPLAYPICTURE == null) { post.USER.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                                    <img src="@Url.Content(@post.USER.DISPLAYPICTURE)" />
+                                </div>
+                                <div class="postUsername">
+                                    @Html.ActionLink(post.USER.USERNAME, "Profile", new { userid = post.USER.USERID })
+                                </div>
+                            </div>
+                            <div class="postOptions">
+                                <a >
+                                   <img src="~/Data/3_rounded_square.png" />
+                                </a>
+                            </div>
+                            <div class="modifyPost">
+                            @if (Model.owner.USERID == post.USERID)
+                            {
+                                
+                                    <div class="editPost">
+                                        <a class="editPostBtn">Edit Post</a>
+                                    </div> 
+                                    <div class="delPost">
+                                        @Html.ActionLink("Delete Post", "../Home/delPost", new { postid = post.POSTID , action_="Profile" , controller_="Profile" ,
+                                        userid= Model.user.USERID })
+                                    </div>
+                            }
+                                <div class="sharePost">
+                                    <a href="#">Share</a>
+                                </div>   
+                            </div>
+                            <div class="postContent" style="background-color:#fff;font-size:20px">
+                                <p>@post.CONTENT</p>
+                                @using (Html.BeginForm("editPost", "Home", new { userid = Model.user.USERID, postid = post.POSTID, action_ = "Profile", controller_ = "Profile" }, FormMethod.Post, new { Class = "editPostForm" , style = "display:none" }))
+                                {   
+                                    <input name="content" type="text" value="@post.CONTENT" />
+                                    <input type="submit" class="submitBtn" value="Submit"/>
+                                }
+                                <div class="postMedia">
+                                    @if(post.MEDIA !=null){
+                                        string mediaType = post.MEDIA.ToString().Substring(post.MEDIA.ToString().Length - 3).ToLower();
+                                        switch (mediaType)
+                                        {
+                                            case "jpg" : case "png" : case "gif" : 
+                                                <img src=@post.MEDIA class="postPic" /> ;break;
+                                            case "mp4" : case "avi" : case "flv" : case "wmv" :case "mov" :
+                                                <video src=@post.MEDIA controls></video> ;break;
+                                            default :
+                                                var lastSlash = post.MEDIA.LastIndexOf('/');
+                                                var fileName = post.MEDIA.Substring(lastSlash);
+                                                <a href=@post.MEDIA download>@fileName</a>;break;
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            <div class="postReacts row">
+                                <div class="Likes col-md-6 rmPadding">
+                                    <a href="@Url.Action("", "Home/likePost", new { postid = post.POSTID, userid= Model.user.USERID, ownerid = Model.owner.USERID , action_= "Profile" , controller_="Profile"})" >
+                                        <span>
+                                            @{ var src = "/Data/heart.png";
+                                                if (post.liked)
+                                                { src = "/Data/filledheart.png"; }
+                                            }
+                                            <img src=@src />
+                                        </span>
+                                    </a>
+                                    <p>@post.LIKES Likes</p>
+                                </div>
+                                <div class="toggleComments col-md-6 rmPadding">
+                                    <a onclick="toggleComments('post_@post.POSTID')">
+                                       <span>
+                                            <img src="~/Data/comment.png" />
+                                       </span>
+                                       <p>@post.COMMENTS.Count() Comments</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="commentsWrapper">
+                            @foreach (COMMENT comment in post.COMMENTS)
+                            {
+                                <div class="commentWrapper">
+                                    
+                                    <div class="commentOwner">
+                                        <div class="userDP">
+                                            @{if (comment.USER.DISPLAYPICTURE == null) { comment.USER.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                                            <img src="@Url.Content(@comment.USER.DISPLAYPICTURE)" />
+                                        </div>
+                                        @Html.ActionLink(comment.USER.USERNAME, "Profile", new { userid = comment.USER.USERID })
+                                    </div>
+                                    <div class="postOptions">
+                                        <a class="btn">
+                                            <img src="~/Data/3_rounded_square.png" />
+                                        </a>
+                                    </div>
+                                    <div class="modifyPost">
+                                    @if (Model.owner.USERID == comment.USERID)
+                                        {
+                                            <div class="editComment">
+                                                <a class="editCommentBtn">Edit</a>
+                                            </div>
+                                            <div class="delComment">
+                                                @Html.ActionLink("Delete", "../Home/delComment", new { commentid = comment.COMMENTID , action_="Profile" , controller_="Profile" ,
+                                                userid= Model.user.USERID })
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="commentContent">
+                                        <p>@comment.CONTENT</p>
+                                        @using (Html.BeginForm("editComment", "Home", new { userid=Model.user.USERID, commentid=comment.COMMENTID, action_ = "Profile", controller_ = "Profile" }, FormMethod.Post, new { Class="editCommentForm" , style="display:none" })){   
+                                            <input name="content" class="editCommentInput" type="text" value="@comment.CONTENT" />
+                                            <input type="submit" class="submitBtn" value="Submit"/>
+                                        }
+                                    </div>
+                                    <div class="replyComment">
+                                            <a >Reply</a>
+                                        </div>
+                                    <div class="repliesWrapper" style="font-size:14px;padding-left:20px;">
+                                        @foreach (REPLY reply in comment.REPLIES)
+                                        {
+                                            <div class="replyWrapper">
+                                                <div class="replyOwner">
+                                                    <div class="userDP">
+                                                        @{if (reply.USER.DISPLAYPICTURE == null) { reply.USER.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                                                        <img src="@Url.Content(@reply.USER.DISPLAYPICTURE)" />
+                                                    </div>
+                                                    @Html.ActionLink(reply.USER.USERNAME, "Profile", new { userid = reply.USER.USERID })
+                                                </div>
+                                                <div class="postOptions">
+                                                    <a class="btn">
+                                                        <img src="~/Data/3_rounded_square.png" />
+                                                    </a>
+                                                </div>
+                                                <div class="modifyPost">
+                                                @if (Model.owner.USERID == reply.USERID)
+                                                {
+                                                    <div class="editReply">
+                                                        <a class="editReplyBtn">Edit</a>
+                                                    </div>
+                                                    <div class="delReply">
+                                                        @Html.ActionLink("Delete", "../Home/delReply", new { replyid = reply.REPLYID, action_ = "Profile", controller_ = "Profile", userid = Model.user.USERID, ownerid = Model.owner.USERID })
+                                                
+                                                    </div>
+                                                }
+                                                </div>
+                                                <div class="replyContent">
+                                                    <p>@reply.CONTENT</p>
+                                                    @using (Html.BeginForm("editReply", "Home", new {userid=Model.user.USERID, replyid=reply.REPLYID, action_ = "Profile", controller_ =        "Profile" }, FormMethod.Post, new { style="display:none" })){   
+                                                        <input name="content" class="editReplyInput" type="text" value="@reply.CONTENT.ToString()" />
+                                                        <input type="submit" class="submitBtn" value="Submit"/>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        }
+                                        
+                                        <!-- create a reply -->
+                                        <div class="createReply">
+                                            @using (Html.BeginForm("createReply", "Home", new { action_ = "Profile", controller_ = "Profile" }, FormMethod.Post))
+                                            {
+                                            <input type="hidden" name="commentid" value=@comment.COMMENTID />
+                                            <input type="text" class="replyInput" name="replyContent" />
+                                            <input type="hidden" name="ownerid" value=@Model.owner.USERID />
+                                            <input type="hidden" name="userid" value=@Model.user.USERID />
+                                            <input type="submit" class="submitBtn" value="Reply" />
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <!-- create commment -->
+                        <div class="createComment">
+                            @using (Html.BeginForm("createComment", "Home", new { action_ = "Profile", controller_ = "Profile" }, FormMethod.Post))
+                            {
+                                <input type="hidden" name="postid" value=@post.POSTID />
+                                <input type="text" name="commentContent" placeholder="Write a comment..." />
+                                <input type="hidden" name="ownerid" value=@Model.owner.USERID />
+                                <input type="hidden" name="userid" value=@Model.user.USERID />
+                                <input type="submit" class="submitBtn" value="Comment" />
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- friends list -->
+            <div class="col-md-3 frContainer rmPadding">
+                <div class="frLabel">
+                    <label>Friends List</label>
+                </div>
+                
+                <ul>
+                    @foreach (USER friend in Model.friends_list)
+                    {
+                        <li class="row">
+                            @{if (friend.DISPLAYPICTURE == null) { friend.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                            <div class="userContainer col-md-8 rmPadding">
+                                <div class="userDP">
+                                    <img src="@Url.Content(@friend.DISPLAYPICTURE)" />
+                                </div>
+                                <div class="username">
+                                    @Html.ActionLink(friend.USERNAME, "Profile", new { userid = friend.USERID, ownerid = Model.owner.USERID })
+                                </div>
+                            </div>
+                            <div class="sendMsg col-md-4 rmPadding">
+                                <a href="@Url.Action("../Messenger/newConversation", new { userID=Model.owner.USERID,  contactID=friend.USERID ,  friends_list=Model.friends_list })">
+                                    <img src="~/Data/messengerLogo.png" />
+                                </a>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </section>
+    <footer></footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/main.js"></script>

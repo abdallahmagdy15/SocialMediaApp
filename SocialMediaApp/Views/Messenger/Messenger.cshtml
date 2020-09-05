@@ -1,0 +1,61 @@
+﻿@model SocialMediaApp.Models.MessengerModel
+@{
+    ViewBag.Title = "messenger";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="~/Content/loginMessStyle.css" rel="stylesheet" />
+<body>
+    <header>
+        @{
+            Html.RenderPartial("header", Model.headerm);   
+        }
+    </header>
+    <div class="row">
+        <div class="col-md-3 conversations">
+            <div class="convsHead head">Chats</div>
+                <ul type=none>
+                    @for (int i = Model.conversations.Count - 1; i > -1; i--)
+                    {
+                        string conLink = "conLink " + Model.consId[i].ToString();
+                        <li>
+                            <button conid=@Convert.ToInt32(Model.consId[i]) class="@conLink">
+                                @{ USER conv = (USER)Model.conversations[i];}
+                                @conv.USERNAME
+                                <div class="notif">@Convert.ToInt32(Model.notifications[i])</div>
+                            </button>
+                        </li>
+                    }
+                </ul>
+            </div>
+        <div class="col-md-6 chat">
+            <div class="chatHead head"></div>
+            <div class="chatHistory">
+
+            </div>
+            <div class="chatInput">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control messageInput" placeholder="Type a Message..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary sendBtn" type="button" id="button-addon2">Send <i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 contacts">
+            <div class="contactsHead head">People</div>
+            <ul type=none>
+                @{
+                    foreach (USER o in Model.contacts)
+                    {
+                        <li>@Html.ActionLink(o.USERNAME, "newConversation", "Messenger", new { userID = Model.userId, contactID = o.USERID }, null)</li>
+                    }}
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="~/Scripts/messJS.js"></script>

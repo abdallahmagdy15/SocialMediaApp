@@ -1,0 +1,41 @@
+﻿@model SocialMediaApp.Models.headerModel
+@{
+    ViewBag.Title = "Home";
+}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="~/Content/style.css" rel="stylesheet" />
+
+<div class="row">
+            <div class="col-md-6 rmPadding">
+                <div class="brand">
+                    <a href="/Home/Home">
+                        <img src="~/Data/logo.png" />
+                    </a>
+                </div>
+                <div class="md-form mt-0 search">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                </div>
+            </div>
+            
+            <div class="user col-md-4 rmPadding">
+                <div class="userContainer">
+                    <div class="userDP">
+                        @{if (Model.owner.DISPLAYPICTURE == null) { Model.owner.DISPLAYPICTURE = "~/Data/Display_Pictures/defPic.jpg"; }}
+                        <img src='@Url.Content(Model.owner.DISPLAYPICTURE)' />
+                    </div>
+                    <div class="username">
+                        @Html.ActionLink(Model.owner.USERNAME, "../Home/gotoProfile", new { userid = Model.owner.USERID })
+                    </div>
+                </div>
+                <div class="messengerBtn">
+                    <a href="@Url.Action("../Messenger/Messenger")">
+                        <img src="~/Data/messengerLogo.png"/>
+                         &nbsp; Messenger
+                    </a>
+                    
+                </div>
+            </div>
+            <div class="logout col-md-2 rmPadding">
+                @Html.ActionLink("Log Out", "../Home/logout")
+            </div>
+        </div>

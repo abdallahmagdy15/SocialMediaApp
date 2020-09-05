@@ -1,0 +1,51 @@
+﻿*{
+    box-sizing: content-box;
+    /* for css debugging
+        background: #000 !important;
+        color: #0f0 !important;
+        outline: solid #f00 1px !important; */
+}
+/* for col-- classes */
+.rmPadding{
+    padding: 0;
+}
+img {
+    width:130px;
+    height:auto;
+}
+ul{
+    list-style-type: none
+}
+a:hover{
+    color: grey;
+    text-decoration: none;
+    cursor:pointer;
+
+}
+.container{
+    margin: 0;
+    padding:0;
+    max-width: 100%;
+}
+.row{
+    margin: 0;
+}
+
+.userDP img{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+}
+.postOwnerDP img{
+    width : 50px;
+    height: 50px;
+    border-radius:50%;
+}
+.postWrapper{
+    margin:20px 0;
+    border-radius:10px;
+}
+td{
+    width:160px;
+    height:1.5rem;
+}

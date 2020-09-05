@@ -1,0 +1,231 @@
+﻿body > .row {
+    width:100%;
+height:100%;
+padding-top:66px;
+}
+img{
+    width:inherit;
+}
+.head {
+	text-align: center;
+	font-size: 21px;
+	width: 100%;
+	height: 60px;
+	padding-top: 15px;
+	background-color: rgb(253, 253, 253);
+	color: #000;
+	font-weight: bold;
+}
+p {
+    margin-bottom: 6px;
+}
+/* chat */
+.chatInput {
+	position: absolute;
+	width: 100%;
+	bottom: 20px;
+    padding: 0 43px;
+}
+.messageInput{
+	font-size: 20px;
+}
+.chatHistory {
+	height: 77%;
+	scroll-behavior: smooth;
+	overflow-y: auto;
+    background-color:#fff;
+}
+.chatMessages {
+	margin-top: 25px;
+	padding-right: 25px;
+}
+.chatMessages label {
+        color: #878787;
+        font-size: 15px;
+        text-align: center;
+        width: 100%;
+        display: none;
+}
+.chat{
+    height:100%;
+    padding:0;
+    background-color:#fff;
+}
+
+.msgBoxShadow {
+	background-image: url('overlay.png');
+	height: 26px;
+	position: absolute;
+	width: 100%;
+	background-size: contain;
+}
+.chatMessages p {
+	display: inline-block;
+	height: 33px;
+	border-radius: 16px;
+	color: #fff;
+	padding: 3px 14px;
+	font-size: 17px;
+    cursor: default;
+}
+.chatMessages p.msg1{
+    background-color: #f5f5f5;
+    color: #4e4e4e;
+}
+    .chatMessages p.msg2 {
+        float: right;
+        background-color: rgb(0, 153, 255);
+    }
+    .chatHead{
+        background-color:rgb(0, 153, 255);
+        color:#fff;
+    } 
+    .sendBtn {
+	background-color: #09f;
+    }
+/* end chat */
+
+/*conversations*/
+.conversations , .contacts{
+    background-color:#fff; 
+    padding:0;
+    border-right: 1px solid #f2f2f2;
+}
+.conversations ul{
+	padding-left: 15px;
+    overflow-y:auto;
+    margin-top: 10px;
+}
+.conversations ul li , .contacts ul li {
+	width: 100%;
+	height: 60px;
+    border-bottom: 1px solid #f2f2f2;
+
+}
+button.conLink, .contacts ul li a {
+
+	background-color: #f3f3f333;
+	border: none;
+	width: 100%;
+	height: 100%;
+	text-align: left;
+	padding-left: 30px;
+	font-size: 18px;
+	color: #717171;
+    display:block;
+    text-decoration:none;
+}
+button.conLink {
+	border-radius: 12px;
+    background-color:#fff;
+}
+button.activeConv{
+        background-color: #f2f2f2;
+}
+.contacts ul li a:hover {
+    background-color: #f2f2f2;
+}
+.conversations ul li {
+    padding: 0 20px 0 10px;
+    border:none
+}
+/*contacts*/
+.contacts , .contacts ul{
+    padding:0;
+    border-left: 1px solid #f2f2f2;
+}
+.contacts a {
+	padding-top: 15px;
+}
+.contacts a::after {
+	content: '';
+	width: 12px;
+	height: 11px;
+	border-radius: 50%;
+	background-color: #4ee96b;
+	position: absolute;
+	right: 26px;
+	margin-top: 9px;
+}
+.activenotif {
+	position: absolute;
+	right: 30px;
+	margin-top: -22px;
+	background-color: #f23721e6;
+	width: 24px;
+	height: 20px;
+	font-size: 14px;
+	border-radius: 15px;
+	text-align: center;
+	color: #fff;
+	font-weight: bold;
+}
+/* login form */
+form.loginForm {
+	margin: 50px 150px;
+}
+div.formInner > div:first-child img {
+	width: 60px;
+    height:60px;
+}
+div.formInner > div:first-child {
+	margin-bottom: 70px;
+}
+.formInner > h2 {
+    font-weight:bold;
+    margin-bottom:20px;
+}
+.formInner > h5 {
+	color: #00000082;
+	margin-bottom: 40px;
+	width: 415px;
+}
+.formInner{
+    width:500px;
+}
+.form-control{
+	background-color: #00000008;
+	border: navajowhite;
+	border-radius: 7px;
+	font-size: 17px;
+}
+.loginSubmit {
+	border-radius: 25px;
+	height: 45px;
+	width: 90px;
+	border: none;
+    margin-top:10px;
+}
+.form-group > div {
+    padding-left:0
+}
+.getMobileApp a {
+	display: inline-block;
+    width:48%;
+}
+.getMobileApp {
+    width:500px;
+}
+.getMobileApp a > div{
+    width:100%;
+}
+.getMobileApp {
+	width: 315px;
+	margin-top: 25px;
+}
+.loginCover img {
+	width: 110%;
+	margin-top: 20px;
+}
+.createNewAcc {
+	color: #00000082;
+    font-weight:bold;
+}
+.chatMessages li {
+	margin-bottom: 5px;
+}
+header {
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

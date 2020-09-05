@@ -1,0 +1,555 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SOCIALMEDIA_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COMMENTS">
+          <Key>
+            <PropertyRef Name="COMMENTID" />
+          </Key>
+          <Property Name="COMMENTID" Type="int" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="LIKES" Type="int" />
+          <Property Name="POSTID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FOLLOWINGS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="FOLLOWINGID" Type="int" Nullable="false" />
+          <Property Name="FR_CONFIRMED" Type="bit" />
+        </EntityType>
+        <EntityType Name="LIKEDPOSTS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="POSTID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="POSTS">
+          <Key>
+            <PropertyRef Name="POSTID" />
+          </Key>
+          <Property Name="POSTID" Type="int" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="POSTDATE" Type="date" Nullable="false" />
+          <Property Name="LIKES" Type="int" />
+          <Property Name="MEDIA" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="REPLIES">
+          <Key>
+            <PropertyRef Name="REPLYID" />
+          </Key>
+          <Property Name="REPLYID" Type="int" Nullable="false" />
+          <Property Name="CONTENT" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="LIKES" Type="int" />
+          <Property Name="COMMENTID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DISPLAYPICTURE" Type="varchar" MaxLength="500" />
+          <Property Name="BG" Type="varchar" MaxLength="500" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="GENDER" Type="bit" Nullable="false" />
+          <Property Name="BIO" Type="nvarchar" MaxLength="300" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK__COMMENTS__POSTID__03F0984C">
+          <End Role="POSTS" Type="Self.POSTS" Multiplicity="1" />
+          <End Role="COMMENTS" Type="Self.COMMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POSTS">
+              <PropertyRef Name="POSTID" />
+            </Principal>
+            <Dependent Role="COMMENTS">
+              <PropertyRef Name="POSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COMMENTS__USERID__04E4BC85">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="COMMENTS" Type="Self.COMMENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="COMMENTS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWING__FOLLO__72C60C4A">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FOLLOWINGS" Type="Self.FOLLOWINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="FOLLOWINGS">
+              <PropertyRef Name="FOLLOWINGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWING__USERI__71D1E811">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FOLLOWINGS" Type="Self.FOLLOWINGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="FOLLOWINGS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LIKEDPOST__POSTI__17036CC0">
+          <End Role="POSTS" Type="Self.POSTS" Multiplicity="1" />
+          <End Role="LIKEDPOSTS" Type="Self.LIKEDPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POSTS">
+              <PropertyRef Name="POSTID" />
+            </Principal>
+            <Dependent Role="LIKEDPOSTS">
+              <PropertyRef Name="POSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LIKEDPOST__USERI__160F4887">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LIKEDPOSTS" Type="Self.LIKEDPOSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="LIKEDPOSTS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__POSTS__USERID__70DDC3D8">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="POSTS" Type="Self.POSTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="POSTS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPLIES__COMMENT__07C12930">
+          <End Role="COMMENTS" Type="Self.COMMENTS" Multiplicity="1" />
+          <End Role="REPLIES" Type="Self.REPLIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMMENTS">
+              <PropertyRef Name="COMMENTID" />
+            </Principal>
+            <Dependent Role="REPLIES">
+              <PropertyRef Name="COMMENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPLIES__USERID__08B54D69">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="REPLIES" Type="Self.REPLIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="REPLIES">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SOCIALMEDIA_DBModelStoreContainer">
+          <EntitySet Name="COMMENTS" EntityType="Self.COMMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FOLLOWINGS" EntityType="Self.FOLLOWINGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LIKEDPOSTS" EntityType="Self.LIKEDPOSTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="POSTS" EntityType="Self.POSTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPLIES" EntityType="Self.REPLIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__COMMENTS__POSTID__03F0984C" Association="Self.FK__COMMENTS__POSTID__03F0984C">
+            <End Role="POSTS" EntitySet="POSTS" />
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COMMENTS__USERID__04E4BC85" Association="Self.FK__COMMENTS__USERID__04E4BC85">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWING__FOLLO__72C60C4A" Association="Self.FK__FOLLOWING__FOLLO__72C60C4A">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWINGS" EntitySet="FOLLOWINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWING__USERI__71D1E811" Association="Self.FK__FOLLOWING__USERI__71D1E811">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWINGS" EntitySet="FOLLOWINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LIKEDPOST__POSTI__17036CC0" Association="Self.FK__LIKEDPOST__POSTI__17036CC0">
+            <End Role="POSTS" EntitySet="POSTS" />
+            <End Role="LIKEDPOSTS" EntitySet="LIKEDPOSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LIKEDPOST__USERI__160F4887" Association="Self.FK__LIKEDPOST__USERI__160F4887">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LIKEDPOSTS" EntitySet="LIKEDPOSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__POSTS__USERID__70DDC3D8" Association="Self.FK__POSTS__USERID__70DDC3D8">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="POSTS" EntitySet="POSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPLIES__COMMENT__07C12930" Association="Self.FK__REPLIES__COMMENT__07C12930">
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+            <End Role="REPLIES" EntitySet="REPLIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPLIES__USERID__08B54D69" Association="Self.FK__REPLIES__USERID__08B54D69">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="REPLIES" EntitySet="REPLIES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SOCIALMEDIA_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COMMENT">
+          <Key>
+            <PropertyRef Name="COMMENTID" />
+          </Key>
+          <Property Name="COMMENTID" Type="Int32" Nullable="false" />
+          <Property Name="CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="LIKES" Type="Int32" />
+          <Property Name="POSTID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="POST" Relationship="Self.FK__COMMENTS__POSTID__22AA2996" FromRole="COMMENTS" ToRole="POSTS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__COMMENTS__USERID__21B6055D" FromRole="COMMENTS" ToRole="USERS" />
+          <NavigationProperty Name="REPLIES" Relationship="Self.FK__REPLIES__COMMENT__24927208" FromRole="COMMENTS" ToRole="REPLIES" />
+        </EntityType>
+        <EntityType Name="FOLLOWING">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="FOLLOWINGID" Type="Int32" Nullable="false" />
+          <Property Name="FR_CONFIRMED" Type="Boolean" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__FOLLOWING__FOLLO__29572725" FromRole="FOLLOWINGS" ToRole="USERS" />
+          <NavigationProperty Name="USER1" Relationship="Self.FK__FOLLOWING__USERI__276EDEB3" FromRole="FOLLOWINGS" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="POST">
+          <Key>
+            <PropertyRef Name="POSTID" />
+          </Key>
+          <Property Name="POSTID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="POSTDATE" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LIKES" Type="Int32" />
+          <NavigationProperty Name="COMMENTS" Relationship="Self.FK__COMMENTS__POSTID__22AA2996" FromRole="POSTS" ToRole="COMMENTS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__POSTS__USERID__2B3F6F97" FromRole="POSTS" ToRole="USERS" />
+          <NavigationProperty Name="LIKEDPOSTS" Relationship="SOCIALMEDIA_DBModel.FK__LIKEDPOST__POSTI__17036CC0" FromRole="POST" ToRole="LIKEDPOST" />
+          <Property Name="MEDIA" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="REPLY">
+          <Key>
+            <PropertyRef Name="REPLYID" />
+          </Key>
+          <Property Name="REPLYID" Type="Int32" Nullable="false" />
+          <Property Name="CONTENT" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="LIKES" Type="Int32" />
+          <Property Name="COMMENTID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="COMMENT" Relationship="Self.FK__REPLIES__COMMENT__24927208" FromRole="REPLIES" ToRole="COMMENTS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__REPLIES__USERID__239E4DCF" FromRole="REPLIES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="USERID" />
+          </Key>
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DISPLAYPICTURE" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="COMMENTS" Relationship="Self.FK__COMMENTS__USERID__21B6055D" FromRole="USERS" ToRole="COMMENTS" />
+          <NavigationProperty Name="FOLLOWINGS" Relationship="Self.FK__FOLLOWING__FOLLO__29572725" FromRole="USERS" ToRole="FOLLOWINGS" />
+          <NavigationProperty Name="FOLLOWINGS1" Relationship="Self.FK__FOLLOWING__USERI__276EDEB3" FromRole="USERS" ToRole="FOLLOWINGS" />
+          <NavigationProperty Name="POSTS" Relationship="Self.FK__POSTS__USERID__2B3F6F97" FromRole="USERS" ToRole="POSTS" />
+          <NavigationProperty Name="REPLIES" Relationship="Self.FK__REPLIES__USERID__239E4DCF" FromRole="USERS" ToRole="REPLIES" />
+          <Property Name="BG" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="GENDER" Type="Boolean" Nullable="false" />
+          <Property Name="BIO" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LIKEDPOSTS" Relationship="SOCIALMEDIA_DBModel.FK__LIKEDPOST__USERI__160F4887" FromRole="USER" ToRole="LIKEDPOST" />
+          <Property Name="EMAIL" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__COMMENTS__POSTID__22AA2996">
+          <End Role="POSTS" Type="SOCIALMEDIA_DBModel.POST" Multiplicity="1" />
+          <End Role="COMMENTS" Type="Self.COMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POSTS">
+              <PropertyRef Name="POSTID" />
+            </Principal>
+            <Dependent Role="COMMENTS">
+              <PropertyRef Name="POSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COMMENTS__USERID__21B6055D">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="COMMENTS" Type="Self.COMMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="COMMENTS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPLIES__COMMENT__24927208">
+          <End Role="COMMENTS" Type="Self.COMMENT" Multiplicity="1" />
+          <End Role="REPLIES" Type="SOCIALMEDIA_DBModel.REPLY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COMMENTS">
+              <PropertyRef Name="COMMENTID" />
+            </Principal>
+            <Dependent Role="REPLIES">
+              <PropertyRef Name="COMMENTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWING__FOLLO__29572725">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="FOLLOWINGS" Type="Self.FOLLOWING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="FOLLOWINGS">
+              <PropertyRef Name="FOLLOWINGID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__FOLLOWING__USERI__276EDEB3">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="FOLLOWINGS" Type="Self.FOLLOWING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="FOLLOWINGS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__POSTS__USERID__2B3F6F97">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="POSTS" Type="SOCIALMEDIA_DBModel.POST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="POSTS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__REPLIES__USERID__239E4DCF">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="REPLIES" Type="SOCIALMEDIA_DBModel.REPLY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="REPLIES">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SOCIALMEDIA_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COMMENTS" EntityType="Self.COMMENT" />
+          <EntitySet Name="FOLLOWINGS" EntityType="Self.FOLLOWING" />
+          <EntitySet Name="POSTS" EntityType="SOCIALMEDIA_DBModel.POST" />
+          <EntitySet Name="REPLIES" EntityType="SOCIALMEDIA_DBModel.REPLY" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="FK__COMMENTS__POSTID__22AA2996" Association="Self.FK__COMMENTS__POSTID__22AA2996">
+            <End Role="POSTS" EntitySet="POSTS" />
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COMMENTS__USERID__21B6055D" Association="Self.FK__COMMENTS__USERID__21B6055D">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPLIES__COMMENT__24927208" Association="Self.FK__REPLIES__COMMENT__24927208">
+            <End Role="COMMENTS" EntitySet="COMMENTS" />
+            <End Role="REPLIES" EntitySet="REPLIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWING__FOLLO__29572725" Association="Self.FK__FOLLOWING__FOLLO__29572725">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWINGS" EntitySet="FOLLOWINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__FOLLOWING__USERI__276EDEB3" Association="Self.FK__FOLLOWING__USERI__276EDEB3">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FOLLOWINGS" EntitySet="FOLLOWINGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__POSTS__USERID__2B3F6F97" Association="Self.FK__POSTS__USERID__2B3F6F97">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="POSTS" EntitySet="POSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__REPLIES__USERID__239E4DCF" Association="Self.FK__REPLIES__USERID__239E4DCF">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="REPLIES" EntitySet="REPLIES" />
+          </AssociationSet>
+          <EntitySet Name="LIKEDPOSTS" EntityType="SOCIALMEDIA_DBModel.LIKEDPOST" />
+          <AssociationSet Name="FK__LIKEDPOST__POSTI__17036CC0" Association="SOCIALMEDIA_DBModel.FK__LIKEDPOST__POSTI__17036CC0">
+            <End Role="POST" EntitySet="POSTS" />
+            <End Role="LIKEDPOST" EntitySet="LIKEDPOSTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LIKEDPOST__USERI__160F4887" Association="SOCIALMEDIA_DBModel.FK__LIKEDPOST__USERI__160F4887">
+            <End Role="USER" EntitySet="USERS" />
+            <End Role="LIKEDPOST" EntitySet="LIKEDPOSTS" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="LIKEDPOST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="POSTID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="POST" Relationship="SOCIALMEDIA_DBModel.FK__LIKEDPOST__POSTI__17036CC0" FromRole="LIKEDPOST" ToRole="POST" />
+          <NavigationProperty Name="USER" Relationship="SOCIALMEDIA_DBModel.FK__LIKEDPOST__USERI__160F4887" FromRole="LIKEDPOST" ToRole="USER" />
+        </EntityType>
+        <Association Name="FK__LIKEDPOST__POSTI__17036CC0">
+          <End Type="SOCIALMEDIA_DBModel.POST" Role="POST" Multiplicity="1" />
+          <End Type="SOCIALMEDIA_DBModel.LIKEDPOST" Role="LIKEDPOST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="POST">
+              <PropertyRef Name="POSTID" />
+            </Principal>
+            <Dependent Role="LIKEDPOST">
+              <PropertyRef Name="POSTID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LIKEDPOST__USERI__160F4887">
+          <End Type="SOCIALMEDIA_DBModel.USER" Role="USER" Multiplicity="1" />
+          <End Type="SOCIALMEDIA_DBModel.LIKEDPOST" Role="LIKEDPOST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="LIKEDPOST">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SOCIALMEDIA_DBModelStoreContainer" CdmEntityContainer="SOCIALMEDIA_DBEntities">
+          <EntitySetMapping Name="COMMENTS">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.COMMENT">
+              <MappingFragment StoreEntitySet="COMMENTS">
+                <ScalarProperty Name="COMMENTID" ColumnName="COMMENTID" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="LIKES" ColumnName="LIKES" />
+                <ScalarProperty Name="POSTID" ColumnName="POSTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FOLLOWINGS">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.FOLLOWING">
+              <MappingFragment StoreEntitySet="FOLLOWINGS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="FOLLOWINGID" ColumnName="FOLLOWINGID" />
+                <ScalarProperty Name="FR_CONFIRMED" ColumnName="FR_CONFIRMED" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POSTS">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.POST">
+              <MappingFragment StoreEntitySet="POSTS">
+                <ScalarProperty Name="MEDIA" ColumnName="MEDIA" />
+                <ScalarProperty Name="POSTID" ColumnName="POSTID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="POSTDATE" ColumnName="POSTDATE" />
+                <ScalarProperty Name="LIKES" ColumnName="LIKES" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPLIES">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.REPLY">
+              <MappingFragment StoreEntitySet="REPLIES">
+                <ScalarProperty Name="REPLYID" ColumnName="REPLYID" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="LIKES" ColumnName="LIKES" />
+                <ScalarProperty Name="COMMENTID" ColumnName="COMMENTID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="BIO" ColumnName="BIO" />
+                <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="BG" ColumnName="BG" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="DISPLAYPICTURE" ColumnName="DISPLAYPICTURE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LIKEDPOSTS">
+            <EntityTypeMapping TypeName="SOCIALMEDIA_DBModel.LIKEDPOST">
+              <MappingFragment StoreEntitySet="LIKEDPOSTS">
+                <ScalarProperty Name="POSTID" ColumnName="POSTID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

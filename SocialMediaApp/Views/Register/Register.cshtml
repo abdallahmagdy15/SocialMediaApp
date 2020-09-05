@@ -1,0 +1,93 @@
+﻿@model SocialMediaApp.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+<link href="~/Content/style.css" rel="stylesheet" />
+<h2>Register</h2>Or @Html.ActionLink("Login","../Login/Login")</br>
+@if (Model.status == "registered")
+{
+ <label class="registerStatus" style="color:red">This Email or Username is already Registered</label>
+}
+@using (Html.BeginForm(null, null, new { user = Model.user }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            <table>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Username</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.user.USERNAME)
+                    </td>
+                </tr>
+            </div>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Email</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.user.EMAIL)
+                    </td>
+                </tr>
+            </div>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Password</label>
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.user.PASSWORD)
+                    </td>
+                </tr>
+            </div>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Repeat Password</label>
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.repeatPass)
+                    </td>
+                </tr>
+            </div>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Gender</label>
+                    </td>
+                    <td>
+                        @Html.RadioButtonFor(m => m.user.GENDER, "true")<label>Male</label>
+                        @Html.RadioButtonFor(m => m.user.GENDER, "false")<label>Female</label>
+                    </td>
+                </tr>
+            </div>
+            <div class="col-md-10">
+                <tr>
+                    <td>
+                        <label class="col-md-3">Date of Birth</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.user.DOB)
+                    </td>
+                </tr>
+            </div>
+          </table>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
